@@ -1,8 +1,15 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Calendar, User, Accessibility, Syringe, MapPin } from 'lucide-react';
-import type { Dog } from '@/types';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Calendar, User, Accessibility, Syringe, MapPin } from "lucide-react";
+import { normalizeImageSrc } from "@/lib/utils";
+import type { Dog } from "@/types";
 
 interface DogDetailsModalProps {
   dog: Dog | null;
@@ -11,7 +18,12 @@ interface DogDetailsModalProps {
   onAdoptClick?: () => void;
 }
 
-export function DogDetailsModal({ dog, isOpen, onOpenChange, onAdoptClick }: DogDetailsModalProps) {
+export function DogDetailsModal({
+  dog,
+  isOpen,
+  onOpenChange,
+  onAdoptClick,
+}: DogDetailsModalProps) {
   if (!dog) return null;
 
   return (
@@ -27,14 +39,12 @@ export function DogDetailsModal({ dog, isOpen, onOpenChange, onAdoptClick }: Dog
               </Badge>
             )}
           </DialogTitle>
-          <DialogDescription>
-            {dog.ongName}
-          </DialogDescription>
+          <DialogDescription>{dog.ongName}</DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4">
           <img
-            src={dog.image}
+            src={normalizeImageSrc(dog.image)}
             alt={dog.name}
             className="w-full aspect-video object-cover rounded-xl"
           />
@@ -56,14 +66,20 @@ export function DogDetailsModal({ dog, isOpen, onOpenChange, onAdoptClick }: Dog
               <Calendar className="w-5 h-5 text-petblue" />
               <div>
                 <p className="text-xs text-muted-foreground">Idade</p>
-                <p className="font-medium">{dog.age} {dog.ageUnit}</p>
+                <p className="font-medium">
+                  {dog.age} {dog.ageUnit}
+                </p>
               </div>
             </div>
             <div className="flex items-center gap-2 p-3 bg-muted rounded-lg">
-              <User className={`w-5 h-5 ${dog.gender === 'macho' ? 'text-petblue' : 'text-petpink'}`} />
+              <User
+                className={`w-5 h-5 ${dog.gender === "macho" ? "text-petblue" : "text-petpink"}`}
+              />
               <div>
                 <p className="text-xs text-muted-foreground">Sexo</p>
-                <p className="font-medium">{dog.gender === 'macho' ? 'Macho' : 'Fêmea'}</p>
+                <p className="font-medium">
+                  {dog.gender === "macho" ? "Macho" : "Fêmea"}
+                </p>
               </div>
             </div>
             <div className="flex items-center gap-2 p-3 bg-muted rounded-lg">
@@ -77,7 +93,9 @@ export function DogDetailsModal({ dog, isOpen, onOpenChange, onAdoptClick }: Dog
               <Syringe className="w-5 h-5 text-petgreen" />
               <div>
                 <p className="text-xs text-muted-foreground">Vacinado</p>
-                <p className="font-medium">{dog.isVaccinated ? 'Sim' : 'Não'}</p>
+                <p className="font-medium">
+                  {dog.isVaccinated ? "Sim" : "Não"}
+                </p>
               </div>
             </div>
           </div>

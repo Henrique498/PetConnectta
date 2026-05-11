@@ -11,6 +11,7 @@ import {
   Accessibility,
   Search,
 } from "lucide-react";
+import { normalizeImageSrc } from "@/lib/utils";
 import { dogs } from "@/data/dogs";
 
 // 1. Pega os primeiros 4 cães em destaque de forma consistente
@@ -174,7 +175,7 @@ export function HomePage({ onPageChange }: HomePageProps) {
             >
               <div className="relative aspect-square overflow-hidden">
                 <img
-                  src={dog.image}
+                  src={normalizeImageSrc(dog.image)}
                   alt={dog.name}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
