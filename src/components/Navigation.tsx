@@ -9,7 +9,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from "@/components/ui/sheet";
 import {
   Home,
   Search,
@@ -180,6 +187,12 @@ export function Navigation({
                 </button>
               </SheetTrigger>
               <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+                <SheetHeader className="sr-only">
+                  <SheetTitle>Menu mobile</SheetTitle>
+                  <SheetDescription>
+                    Menu de navegação para dispositivos móveis
+                  </SheetDescription>
+                </SheetHeader>
                 <div className="flex flex-col h-full">
                   <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-3">

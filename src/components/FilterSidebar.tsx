@@ -1,16 +1,18 @@
-import { useState } from 'react';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { MapPin, Calendar, Search, Heart, Building, User, Navigation, MapPinned } from 'lucide-react';
-import { cities, ageRanges, ongs } from '@/data/dogs';
-import type { FilterOptions } from '@/types';
+  MapPin,
+  Calendar,
+  Search,
+  Heart,
+  Building,
+  User,
+  Navigation,
+  MapPinned,
+} from "lucide-react";
+import { cities, ageRanges, ongs } from "@/data/dogs";
+import type { FilterOptions } from "@/types";
 
 interface FilterSidebarProps {
   filters: FilterOptions;
@@ -21,22 +23,22 @@ interface FilterSidebarProps {
 }
 
 const sizeOptions = [
-  { value: 'all', label: 'Todos os portes' },
-  { value: 'pequeno', label: 'Pequeno' },
-  { value: 'medio', label: 'Médio' },
-  { value: 'grande', label: 'Grande' }
+  { value: "all", label: "Todos os portes" },
+  { value: "pequeno", label: "Pequeno" },
+  { value: "medio", label: "Médio" },
+  { value: "grande", label: "Grande" },
 ];
 
 const genderOptions = [
-  { value: 'all', label: 'Todos os gêneros' },
-  { value: 'macho', label: 'Macho' },
-  { value: 'femea', label: 'Fêmea' }
+  { value: "all", label: "Todos os gêneros" },
+  { value: "macho", label: "Macho" },
+  { value: "femea", label: "Fêmea" },
 ];
 
 const disabilityOptions = [
-  { value: 'all', label: 'Todos os pets' },
-  { value: 'yes', label: 'Com necessidades especiais' },
-  { value: 'no', label: 'Sem necessidades especiais' }
+  { value: "all", label: "Todos os pets" },
+  { value: "yes", label: "Com necessidades especiais" },
+  { value: "no", label: "Sem necessidades especiais" },
 ];
 
 export function FilterSidebar({
@@ -44,13 +46,16 @@ export function FilterSidebar({
   onFilterChange,
   cepInput,
   onCepChange,
-  onSearchByCep
+  onSearchByCep,
 }: FilterSidebarProps) {
   const [showCepSearch, setShowCepSearch] = useState(false);
 
   const updateFilter = (key: keyof FilterOptions, value: string) => {
     onFilterChange({ ...filters, [key]: value });
   };
+
+  const selectClassName =
+    "bg-white dark:bg-card border h-10 w-full rounded-md px-3 text-sm";
 
   return (
     <div className="space-y-6">
@@ -63,7 +68,7 @@ export function FilterSidebar({
           <Navigation className="w-5 h-5 text-petpink" />
           <span className="font-medium">Buscar por proximidade</span>
         </button>
-        
+
         {showCepSearch && (
           <div className="mt-3 space-y-2">
             <Input
@@ -88,7 +93,13 @@ export function FilterSidebar({
       {/* Filters */}
       <div>
         <h3 className="font-semibold text-lg mb-4 flex items-center gap-2">
-          <svg className="w-5 h-5 text-petpink" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <svg
+            className="w-5 h-5 text-petpink"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
             <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
           </svg>
           Filtros
@@ -101,22 +112,18 @@ export function FilterSidebar({
               <MapPin className="w-4 h-4 text-petred" />
               Cidade
             </Label>
-            <Select 
-              value={filters.city} 
-              onValueChange={(value) => updateFilter('city', value)}
+            <select
+              value={filters.city}
+              onChange={(e) => updateFilter("city", e.target.value)}
+              className={selectClassName}
             >
-              <SelectTrigger className="bg-white dark:bg-card border h-10">
-                <SelectValue placeholder="Todas as cidades" />
-              </SelectTrigger>
-              <SelectContent className="bg-white dark:bg-card">
-                <SelectItem value="all">Todas as cidades</SelectItem>
-                {cities.map((city) => (
-                  <SelectItem key={city} value={city}>
-                    {city}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+              <option value="all">Todas as cidades</option>
+              {cities.map((city) => (
+                <option key={city} value={city}>
+                  {city}
+                </option>
+              ))}
+            </select>
           </div>
 
           {/* Age */}
@@ -125,21 +132,17 @@ export function FilterSidebar({
               <Calendar className="w-4 h-4 text-petblue" />
               Idade
             </Label>
-            <Select 
-              value={filters.ageRange} 
-              onValueChange={(value) => updateFilter('ageRange', value)}
+            <select
+              value={filters.ageRange}
+              onChange={(e) => updateFilter("ageRange", e.target.value)}
+              className={selectClassName}
             >
-              <SelectTrigger className="bg-white dark:bg-card border h-10">
-                <SelectValue placeholder="Todas as idades" />
-              </SelectTrigger>
-              <SelectContent className="bg-white dark:bg-card">
-                {ageRanges.map((range) => (
-                  <SelectItem key={range.value} value={range.value}>
-                    {range.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+              {ageRanges.map((range) => (
+                <option key={range.value} value={range.value}>
+                  {range.label}
+                </option>
+              ))}
+            </select>
           </div>
 
           {/* Size */}
@@ -148,21 +151,17 @@ export function FilterSidebar({
               <Search className="w-4 h-4 text-petgreen" />
               Porte
             </Label>
-            <Select 
-              value={filters.size} 
-              onValueChange={(value) => updateFilter('size', value)}
+            <select
+              value={filters.size}
+              onChange={(e) => updateFilter("size", e.target.value)}
+              className={selectClassName}
             >
-              <SelectTrigger className="bg-white dark:bg-card border h-10">
-                <SelectValue placeholder="Todos os portes" />
-              </SelectTrigger>
-              <SelectContent className="bg-white dark:bg-card">
-                {sizeOptions.map((option) => (
-                  <SelectItem key={option.value} value={option.value}>
-                    {option.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+              {sizeOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
           </div>
 
           {/* Gender */}
@@ -171,21 +170,17 @@ export function FilterSidebar({
               <User className="w-4 h-4 text-petpink" />
               Gênero
             </Label>
-            <Select 
-              value={filters.gender || 'all'} 
-              onValueChange={(value) => updateFilter('gender', value)}
+            <select
+              value={filters.gender || "all"}
+              onChange={(e) => updateFilter("gender", e.target.value)}
+              className={selectClassName}
             >
-              <SelectTrigger className="bg-white dark:bg-card border h-10">
-                <SelectValue placeholder="Todos os gêneros" />
-              </SelectTrigger>
-              <SelectContent className="bg-white dark:bg-card">
-                {genderOptions.map((option) => (
-                  <SelectItem key={option.value} value={option.value}>
-                    {option.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+              {genderOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
           </div>
 
           {/* Disability */}
@@ -194,21 +189,17 @@ export function FilterSidebar({
               <Heart className="w-4 h-4 text-petorange" />
               Necessidades Especiais
             </Label>
-            <Select 
-              value={filters.hasDisability} 
-              onValueChange={(value) => updateFilter('hasDisability', value)}
+            <select
+              value={filters.hasDisability}
+              onChange={(e) => updateFilter("hasDisability", e.target.value)}
+              className={selectClassName}
             >
-              <SelectTrigger className="bg-white dark:bg-card border h-10">
-                <SelectValue placeholder="Todos os pets" />
-              </SelectTrigger>
-              <SelectContent className="bg-white dark:bg-card">
-                {disabilityOptions.map((option) => (
-                  <SelectItem key={option.value} value={option.value}>
-                    {option.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+              {disabilityOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
           </div>
 
           {/* ONG */}
@@ -217,22 +208,18 @@ export function FilterSidebar({
               <Building className="w-4 h-4 text-petpink" />
               ONG
             </Label>
-            <Select 
-              value={filters.ongId} 
-              onValueChange={(value) => updateFilter('ongId', value)}
+            <select
+              value={filters.ongId}
+              onChange={(e) => updateFilter("ongId", e.target.value)}
+              className={selectClassName}
             >
-              <SelectTrigger className="bg-white dark:bg-card border h-10">
-                <SelectValue placeholder="Todas as ONGs" />
-              </SelectTrigger>
-              <SelectContent className="bg-white dark:bg-card">
-                <SelectItem value="all">Todas as ONGs</SelectItem>
-                {ongs.map((ong) => (
-                  <SelectItem key={ong.id} value={ong.id}>
-                    {ong.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+              <option value="all">Todas as ONGs</option>
+              {ongs.map((ong) => (
+                <option key={ong.id} value={ong.id}>
+                  {ong.name}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
       </div>
